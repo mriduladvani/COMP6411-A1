@@ -6,6 +6,7 @@ PORT= 9000
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
     while True:
+        print("\n")
         print("Python DB Menu")
         print("1. Find Customer")
         print("2. Add Customer")
@@ -17,12 +18,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         print("8. Exit")
         selection= input("Select: ")
         if selection== "1":
-            name= input("Enter the name")
+            name= input("Enter the name: ")
             request_message= selection + "-" + name
             s.sendall(request_message.encode())
             data= s.recv(1024)
             print(data.decode())
             continue
+        #if selection== "2":
+
         if selection=="8":
             break;
         data= s.recv(1024)
