@@ -96,7 +96,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif selection=="7":
                     all_keys=""
                     report_3=""
-                    report_1= "Name\t\tAge\t\tAddress\t\t\t\tPhone" + "\n.............................................................\n"
+                    report_1= "Name\t\tAge\t\tAddress\t\t\t\tPhone" + "\n..............................................................................\n"
                     print(report_1)
                     for x in dictionary:
                         all_keys+= x + " "
