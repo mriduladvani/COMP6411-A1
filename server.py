@@ -10,6 +10,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         y= x.split("|", 1)
         if y[0]=="":   #if the name is absent, the server skips that record.
             continue
+        #next line makes sure that the age entered is a number, if it isnt, it skips the record
+        if y[1].split("|", 1)[0].strip().isdigit()== False and y[1].split("|", 1)[0]!="":
+            continue
         temp= y[1].split("|")
         value=""
         count=0
@@ -21,7 +24,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 value= value+ "|"
             count+=1
         dictionary[y[0].strip()] = value;
-    #print(dictionary)
+    print(dictionary)
     while True:
         s.listen()
         conn, addr = s.accept()
@@ -44,8 +47,11 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     if name in dictionary:
                         conn.sendall(("Customer already exists").encode())
                     else:
-                        dictionary[name]= record.split("|", 1)[1]
-                        conn.sendall(("Customer added").encode())
+                        if record.split("|")[1].isdigit()== True:
+                            dictionary[name]= record.split("|", 1)[1]
+                            conn.sendall(("Customer added").encode())
+                        else:
+                            conn.sendall(("Entered age is not a number").encode())
                     #print(dictionary)
 
                 elif selection=="3":
@@ -63,11 +69,14 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                     if name not in dictionary:
                         conn.sendall(("Customer does not exist").encode())
                     else:
-                        record=dictionary[name]
-                        updated_record= age + record.split("|", 1)[1]
-                        dictionary[name]=updated_record
-                        print(dictionary)
-                        conn.sendall(("Age update complete").encode())
+                        if data.decode().split("_")[2].isdigit()== True:
+                            record=dictionary[name]
+                            updated_record= age + record.split("|", 1)[1]
+                            dictionary[name]=updated_record
+                            print(dictionary)
+                            conn.sendall(("Age update complete").encode())
+                        else:
+                            conn.sendall(("Entered age is not a number").encode())
 
                 elif selection=="5":
                     name= data.decode().split("_")[1]
