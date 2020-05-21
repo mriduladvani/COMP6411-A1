@@ -35,6 +35,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 selection= data.decode().split("_")[0]
                 if selection=="1":
                     name= data.decode().split("_")[1]
+                    if name=="":
+                        conn.sendall(("You did not enter a name, please try again. ").encode())
+                        continue
                     if name in dictionary:
                         print(dictionary[name])
                         conn.sendall((name + " " + " ".join(dictionary[name].split("|"))).encode())
@@ -44,6 +47,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif selection=="2":
                     record= data.decode().split("_")[1]
                     name= record.split("|", 1)[0].strip()
+                    if name=="":
+                        conn.sendall(("You did not enter a name, please try again. ").encode())
+                        continue
                     if name in dictionary:
                         conn.sendall(("Customer already exists").encode())
                     else:
@@ -57,6 +63,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif selection=="3":
                     #print(data.decode())
                     name = data.decode().split("_")[1]
+                    if name=="":
+                        conn.sendall(("You did not enter a name, please try again. ").encode())
+                        continue
                     if dictionary.pop(name, None) == None:
                         conn.sendall(("Customer does not exist").encode())
                     else:
@@ -66,6 +75,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif selection=="4":
                     name= data.decode().split("_")[1]
                     age= data.decode().split("_")[2] + "|"
+                    if name=="":
+                        conn.sendall(("You did not enter a name, please try again. ").encode())
+                        continue
                     if name not in dictionary:
                         conn.sendall(("Customer does not exist").encode())
                     else:
@@ -81,6 +93,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif selection=="5":
                     name= data.decode().split("_")[1]
                     address= data.decode().split("_")[2]
+                    if name=="":
+                        conn.sendall(("You did not enter a name, please try again. ").encode())
+                        continue
                     if name not in dictionary:
                         conn.sendall(("Customer does not exist").encode())
                     else:
@@ -93,6 +108,9 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 elif selection=="6":
                     name= data.decode().split("_")[1]
                     phone= data.decode().split("_")[2]
+                    if name=="":
+                        conn.sendall(("You did not enter a name, please try again. ").encode())
+                        continue
                     if name not in dictionary:
                         conn.sendall(("Customer does not exist").encode())
                     else:
