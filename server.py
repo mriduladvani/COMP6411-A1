@@ -8,6 +8,12 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     file= open("data.txt", "r")
     for x in file:
         y= x.split("|", 1)
+        count_for_bars=0
+        for i in x: #check for the number of | delimiters, if <3, record skipped.
+            if i=='|':
+                count_for_bars+=1
+        if count_for_bars!=3:
+            continue
         if y[0]=="":   #if the name is absent, the server skips that record.
             continue
         #next line makes sure that the age entered is a number, if it isnt, it skips the record
